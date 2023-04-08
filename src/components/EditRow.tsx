@@ -1,5 +1,3 @@
-import { useState } from 'react'
-import { Item } from '@/stores/looks'
 import { IconButton, TableCell, TableRow, TextField } from '@mui/material'
 import { looksState } from '@/stores/looks'
 import { useRecoilState } from 'recoil'
@@ -33,21 +31,21 @@ export const EditRow = ({ i, j }: Props) => {
     }
 
     return (
-        <TableRow sx={{ py: 2 }}>
+        <TableRow>
             <TableCell>
-                <TextField value={looks[i][j].href} onChange={(e) => updateInput('href', e.target.value)} fullWidth />
+                <TextField value={looks[i][j].href} onChange={(e) => updateInput('href', e.target.value)} size="small" fullWidth />
             </TableCell>
             <TableCell>
-                <TextField value={looks[i][j].category} onChange={(e) => updateInput('category', e.target.value)} />
+                <TextField value={looks[i][j].category} onChange={(e) => updateInput('category', e.target.value)} size="small" />
             </TableCell>
             <TableCell>
-                <TextField value={looks[i][j].productId} onChange={(e) => updateInput('productId', e.target.value)} placeholder="101不要" />
+                <TextField value={looks[i][j].productId} onChange={(e) => updateInput('productId', e.target.value)} size="small" placeholder="101不要" />
             </TableCell>
             <TableCell>
-                <TextField value={looks[i][j].price} onChange={(e) => updatePrice(e.target.value)} placeholder="円マーク不要" />
+                <TextField value={looks[i][j].price} onChange={(e) => updatePrice(e.target.value)} size="small" placeholder="円マーク不要" />
             </TableCell>
             <TableCell>
-                <TextField value={looks[i][j].sizes} onChange={(e) => updateInput('sizes', e.target.value)} placeholder="〇号～〇号" />
+                <TextField value={looks[i][j].sizes} onChange={(e) => updateInput('sizes', e.target.value)} size="small" placeholder="〇号～〇号" />
             </TableCell>
             <TableCell>
                 <IconButton onClick={deleteRow} aria-label='delete row'>

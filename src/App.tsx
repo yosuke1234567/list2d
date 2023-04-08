@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useRecoilState } from 'recoil'
 import { Accordion, AccordionDetails, AccordionSummary, Button, Container, createTheme, Dialog, DialogActions, DialogContent, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, ThemeProvider } from '@mui/material'
-import { MdExpandMore, MdAdd } from 'react-icons/md'
+import { MdExpandMore } from 'react-icons/md'
 import { looksState } from '@/stores/looks'
 import { Header } from './components/Header'
 import { EditRow } from './components/EditRow'
@@ -50,20 +50,13 @@ const App = () => {
     setShowDeleteDialog(false)
   }
 
-  const updateInput = (i: number, j: number, prop: string, value: string) => {
-    const copy = [...looks]
-    copy[i] = [...looks[i]]
-    copy[i][j] = { ...copy[i][j], [prop]: value }
-    setLooks(copy)
-  }
-
   return (
     <div className="App">
       <ThemeProvider theme={muiTheme}>
         <Header />
-        <Container maxWidth="lg" sx={{ pt: 12, pb: 36 }}>
+        <Container maxWidth="lg" sx={{ pt: 13, pb: 36 }}>
           <Dialog open={showDeleteDialog} onClose={() => setShowDeleteDialog(false)}>
-            <DialogContent>LOOK {deletedLook + 1} を削除しますか？</DialogContent>
+            <DialogContent sx={{ width: 320 }}>LOOK {deletedLook + 1} を削除しますか？</DialogContent>
             <DialogActions><Button onClick={() => deleteTable(deletedLook)}>OK</Button></DialogActions>
           </Dialog>
           {
