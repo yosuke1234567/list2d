@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { IconButton, TableCell, TableRow, TextField } from '@mui/material'
 import { looksState } from '@/stores/looks'
 import { useRecoilState } from 'recoil'
@@ -8,13 +9,13 @@ type Props = {
     j: number
 }
 
-export const EditRow = ({ i, j }: Props) => {
+export const EditRow = memo(({ i, j }: Props) => {
     const [looks, setLooks] = useRecoilState(looksState)
 
     const updateInput = (prop: string, value: string) => {
         const copy = [...looks]
         copy[i] = [...looks[i]]
-        copy[i][j] = {...copy[i][j], [prop]: value}
+        copy[i][j] = { ...copy[i][j], [prop]: value }
         setLooks(copy)
     }
 
@@ -54,4 +55,4 @@ export const EditRow = ({ i, j }: Props) => {
             </TableCell>
         </TableRow>
     )
-}
+})

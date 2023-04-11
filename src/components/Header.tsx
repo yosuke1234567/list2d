@@ -7,6 +7,16 @@ import { basePathState } from '@/stores/basePath'
 import { MdAdd, MdSave } from 'react-icons/md'
 import { CodeDialog } from './CodeDialog'
 
+const headerSx = css({
+  position: 'fixed',
+  top: 0,
+  width: '100%',
+  padding: '18px 0 16px',
+  borderBottom: '1px solid #ddd',
+  backgroundColor: '#fff',
+  zIndex: 10,
+})
+
 type Props = {}
 
 export const Header = (props: Props) => {
@@ -19,16 +29,6 @@ export const Header = (props: Props) => {
       setBasePath(localStorage.getItem('base-path')!)
     }
   }, [])
-
-  const headerSx = css({
-    position: 'fixed',
-    top: 0,
-    width: '100%',
-    padding: '18px 0 16px',
-    borderBottom: '1px solid #ddd',
-    backgroundColor: '#fff',
-    zIndex: 10,
-  })
 
   const save = () => {
     if (looks[0]) {
@@ -44,10 +44,10 @@ export const Header = (props: Props) => {
   return (
     <header className={headerSx}>
       <Container maxWidth="lg" sx={{ display: 'flex', gap: 3 }}>
-        <TextField value={basePath} onChange={(e) => setBasePath(e.target.value)} label="base path" size="small" sx={{ width: 280 }} />
-        <Button onClick={() => setLooks([...looks, []])} startIcon={<MdAdd />}>Add Look</Button>
-        <Button onClick={save} startIcon={<MdSave />}>Save</Button>
+        <Button onClick={() => setLooks([...looks, []])} startIcon={<MdAdd />}>LOOKを追加</Button>
+        <Button onClick={save} startIcon={<MdSave />}>保存</Button>
         <CodeDialog />
+        <TextField value={basePath} onChange={(e) => setBasePath(e.target.value)} label="対象パス" size="small" sx={{ width: 280, ml: 'auto' }} />
         <Snackbar open={showAlert} onClose={() => setShowAlert(false)}
           autoHideDuration={2000} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
           <Alert severity="info">保存しました</Alert>
