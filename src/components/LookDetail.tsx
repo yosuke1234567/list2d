@@ -37,7 +37,7 @@ export const LookDetail = ({ i }: Props) => {
     <div role='tabpanel'>
       <Grid2 container justifyContent='space-between'>
         <Button onClick={addItem} startIcon={<BiListPlus />}>アイテムを追加</Button>
-        <Button onClick={deleteItem} startIcon={<BiListMinus />} color='error'>末尾のアイテムを削除</Button>
+        <Button onClick={deleteItem} disabled={looks[i].length < 1} startIcon={<BiListMinus />} color='error'>末尾のアイテムを削除</Button>
       </Grid2>
       <TableContainer sx={{ mt: 2, border: '1px solid #ddd', borderRadius: '4px' }}>
         <Table>

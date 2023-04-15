@@ -58,7 +58,7 @@ export const Header = (props: Props) => {
         <Button onClick={() => setLooks([...looks, []])} startIcon={<MdAdd />}>LOOKを追加</Button>
         <Button onClick={save} startIcon={<MdSave />}>保存</Button>
         <CodeDialog />
-        <Button onClick={() => setShowDeleteDialog(true)} color='error' startIcon={<MdRemoveCircleOutline />}>
+        <Button onClick={() => setShowDeleteDialog(true)} disabled={looks.length < 2} color='error' startIcon={<MdRemoveCircleOutline />}>
           LOOKを1つ減らす
         </Button>
         <TextField value={basePath} onChange={(e) => setBasePath(e.target.value)} label="対象パス" size="small" sx={{ width: 280, ml: 'auto' }} />
