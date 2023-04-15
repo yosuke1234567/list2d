@@ -5,7 +5,7 @@ import { MainArea } from './components/MainArea'
 const App = () => {
   const muiTheme = createTheme({
     typography: {
-      fontFamily: 'Inter, system-ui, Avenir, Helvetica, Arial, sans-serif',
+      fontFamily: 'system-ui, "Segoe UI", Helvetica, Arial, sans-serif',
     },
   })
 

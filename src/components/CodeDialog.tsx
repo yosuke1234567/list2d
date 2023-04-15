@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import { Button, Dialog, DialogContent, TextField } from '@mui/material'
 import { MdCode } from 'react-icons/md'
 import { codeStr } from './codeStr'
@@ -8,7 +8,7 @@ import { basePathState } from '@/stores/basePath'
 
 type Props = {}
 
-export const CodeDialog = (props: Props) => {
+export const CodeDialog = memo((props: Props) => {
   const looks = useRecoilValue(looksState)
   const basePath = useRecoilValue(basePathState)
 
@@ -42,4 +42,4 @@ export const CodeDialog = (props: Props) => {
       </Dialog>
     </>
   )
-}
+})

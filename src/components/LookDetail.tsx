@@ -1,19 +1,19 @@
 import { useState } from 'react'
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2'
+import { BiListPlus, BiListMinus } from 'react-icons/bi'
 import { useRecoilState } from 'recoil'
 import { looksState } from '@/stores/looks'
 import { EditRow } from './EditRow'
 
 type Props = {
   i: number
-  setShowDeleteDialog: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const LookDetail = ({ i, setShowDeleteDialog }: Props) => {
+export const LookDetail = ({ i }: Props) => {
   const [looks, setLooks] = useRecoilState(looksState)
 
-  const add = () => {
+  const addItem = () => {
     const copy = [...looks]
     copy[i] = [...copy[i], {
       key: Date.now(),
@@ -26,22 +26,28 @@ export const LookDetail = ({ i, setShowDeleteDialog }: Props) => {
     setLooks(copy)
   }
 
+  const deleteItem = () => {
+    const copy = [...looks]
+    copy[i] = [...looks[i]]
+    copy[i].pop()
+    setLooks(copy)
+  }
+
   return (
     <div role='tabpanel'>
       <Grid2 container justifyContent='space-between'>
-        <Button onClick={add}>アイテムを追加</Button>
-        <Button onClick={() => setShowDeleteDialog(true)} color="error">このLOOKを削除</Button>
+        <Button onClick={addItem} startIcon={<BiListPlus />}>アイテムを追加</Button>
+        <Button onClick={deleteItem} startIcon={<BiListMinus />} color='error'>末尾のアイテムを削除</Button>
       </Grid2>
       <TableContainer sx={{ mt: 2, border: '1px solid #ddd', borderRadius: '4px' }}>
         <Table>
           <TableHead sx={{ backgroundColor: '#f5f5f9' }}>
             <TableRow>
-              <TableCell sx={{ width: 400 }}>リンク</TableCell>
+              <TableCell sx={{ width: 480 }}>リンク</TableCell>
               <TableCell>アイテム名</TableCell>
               <TableCell>品番</TableCell>
               <TableCell>値段</TableCell>
               <TableCell>サイズ</TableCell>
-              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

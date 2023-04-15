@@ -1,58 +1,92 @@
-import { memo } from 'react'
-import { IconButton, TableCell, TableRow, TextField } from '@mui/material'
+import { useEffect, useRef } from 'react'
+import { TableCell, TableRow, TextField } from '@mui/material'
 import { looksState } from '@/stores/looks'
-import { useRecoilState } from 'recoil'
-import { MdDelete } from 'react-icons/md'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { activeIndexState } from '@/stores/activeIndex'
 
 type Props = {
     i: number
     j: number
 }
 
-export const EditRow = memo(({ i, j }: Props) => {
+export const EditRow = ({ i, j }: Props) => {
     const [looks, setLooks] = useRecoilState(looksState)
+    const activeIndex = useRecoilValue(activeIndexState)
 
-    const updateInput = (prop: string, value: string) => {
+    const hrefRef = useRef<HTMLInputElement>(null)
+    const categoryRef = useRef<HTMLInputElement>(null)
+    const productIdRef = useRef<HTMLInputElement>(null)
+    const priceRef = useRef<HTMLInputElement>(null)
+    const sizesRef = useRef<HTMLInputElement>(null)
+
+    useEffect(() => {
+        hrefRef.current!.value = looks[i][j].href
+        categoryRef.current!.value = looks[i][j].category
+        productIdRef.current!.value = looks[i][j].productId
+        priceRef.current!.value = looks[i][j].price
+        if (looks[i][j].sizes) sizesRef.current!.value = looks[i][j].sizes!
+    }, [activeIndex])
+
+    const onPriceChange = () => {
+        const replace = priceRef.current!.value.replace(/\D/g, '')
+        const locale = replace ? Number(replace).toLocaleString() : ''
+        priceRef.current!.value = locale
+    }
+
+    const updateLooks = (prop: string, value: string) => {
         const copy = [...looks]
         copy[i] = [...looks[i]]
         copy[i][j] = { ...copy[i][j], [prop]: value }
         setLooks(copy)
     }
-
-    const updatePrice = (value: string) => {
-        const replace = value.replace(/\D/g, '')
-        const locale = replace ? Number(replace).toLocaleString() : ''
-        updateInput('price', locale)
+    
+    const onHrefBlur = () => {
+        if (looks[i][j].href !== hrefRef.current!.value) {
+            updateLooks('href', hrefRef.current!.value)
+        }
     }
-
-    const deleteRow = () => {
-        const copy = [...looks]
-        copy[i] = looks[i].filter((item, index) => (index !== j))
-        setLooks(copy)
+    
+    const onCategoryBlur = () => {
+        if (looks[i][j].category !== categoryRef.current!.value) {
+            updateLooks('category', categoryRef.current!.value)
+        }
+    }
+    
+    const onProductIdBlur = () => {
+        if (looks[i][j].productId !== productIdRef.current!.value) {
+            updateLooks('productId', productIdRef.current!.value)
+        }
+    }
+    
+    const onPriceBlur = () => {
+        if (looks[i][j].price !== priceRef.current!.value) {
+            updateLooks('price', priceRef.current!.value)
+        }
+    }
+    
+    const onSizesBlur = () => {
+        if (looks[i][j].sizes !== sizesRef.current!.value) {
+            updateLooks('sizes', sizesRef.current!.value)
+        }
     }
 
     return (
         <TableRow>
             <TableCell>
-                <TextField value={looks[i][j].href} onChange={(e) => updateInput('href', e.target.value)} size="small" fullWidth />
+                <TextField inputRef={hrefRef} onBlur={onHrefBlur} size="small" fullWidth />
             </TableCell>
             <TableCell>
-                <TextField value={looks[i][j].category} onChange={(e) => updateInput('category', e.target.value)} size="small" />
+                <TextField inputRef={categoryRef} onBlur={onCategoryBlur} size="small" />
             </TableCell>
             <TableCell>
-                <TextField value={looks[i][j].productId} onChange={(e) => updateInput('productId', e.target.value)} size="small" placeholder="101不要" />
+                <TextField inputRef={productIdRef} onBlur={onProductIdBlur} size="small" placeholder="101不要" />
             </TableCell>
             <TableCell>
-                <TextField value={looks[i][j].price} onChange={(e) => updatePrice(e.target.value)} size="small" placeholder="円マーク不要" />
+                <TextField inputRef={priceRef} onBlur={onPriceBlur} onChange={onPriceChange} size="small" placeholder="円マーク不要" />
             </TableCell>
             <TableCell>
-                <TextField value={looks[i][j].sizes} onChange={(e) => updateInput('sizes', e.target.value)} size="small" placeholder="〇号～〇号" />
-            </TableCell>
-            <TableCell>
-                <IconButton onClick={deleteRow} aria-label='delete row'>
-                    <MdDelete />
-                </IconButton>
+                <TextField inputRef={sizesRef} onBlur={onSizesBlur} size="small" placeholder="〇号～〇号" />
             </TableCell>
         </TableRow>
     )
-})
+}
