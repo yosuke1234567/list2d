@@ -11,5 +11,5 @@ export type Item = {
 
 export const looksState = atom<Item[][]>({
     key: 'looks-state',
-    default: []
+    default: [[]]
 })
