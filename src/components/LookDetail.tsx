@@ -43,7 +43,7 @@ export const LookDetail = ({ i }: Props) => {
         <Table>
           <TableHead sx={{ backgroundColor: '#f5f5f9' }}>
             <TableRow>
-              <TableCell sx={{ width: 480 }}>リンク</TableCell>
+              <TableCell sx={{ width: 420 }}>リンク</TableCell>
               <TableCell>アイテム名</TableCell>
               <TableCell>品番</TableCell>
               <TableCell>値段</TableCell>
